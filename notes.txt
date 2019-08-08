@@ -1,0 +1,68 @@
+Git and github Basics
+
+
+
+
+https://teamtreehouse.com/library/introduction-to-git
+
+
+OPTION 1
+
+1)  Set up a repo and make some commits on my local machine,
+2)  Create a new empty repo on a hosting services server.
+3) Then add the new repo as a remote on my local repo and push my commits there.
+
+Using the git bash command line to initialize a new project
+
+1)  Create a new project in atom:   open gitbash console in windows.  use ls and cd to get into the project directory
+2) git init [enter]
+3) git status to see what files are tracked/untracked  [enter]
+4) git add <name of file>   [enter]
+
+repeat  git status and git add <name of file> as needed
+
+5) git commit -m "<message>"
+
+if first time, need to set up git config for email and name: instructions on screen
+if first time, press arrow key until git commit command appears from earlier, or retype command [enter]
+
+6) if needed, make changes, then type git status [enter]
+
+7) git add <name of file>   [enter]
+
+8) git status to ensure all files were committed and directory is clean.
+
+
+We are now on step 2 for we have just initialized and made some initial commits to our local repo.
+
+1)  Set up a repo and making some commits on my local machine
+2)  Create a new empty repo on github.
+3) Then I add the new repo as a remote on my local repo and 	push my commits there.
+
+
+1)  Create a new repository on github:   name it   (if mutiple words, separate with dashes)
+2)  click <create a repository>  at the bottom of the page
+
+
+
+
+1)  Set up a repo and make some commits on my local machine,
+2)  Create a new empty repo on a hosting services server.
+3) Then add the new repo as a remote on my local repo and push my commits there.
+
+
+1)  since we already have an existing repository, we want section 2:
+…or push an existing repository from the command line
+
+so from the gitbash we type:
+git remote add origin https://github.com/milesmgit/meal-profiler.git
+git push -u origin master
+
+2)  type in user name and password in the popup box
+
+
+
+
+3) make changes to the project via step one, and when ready to push to the remote on github:
+
+4)  type  <git push> [enter]   username and password if prompted
