@@ -1,0 +1,88 @@
+@import 'https://fonts.googleapis.com/css?family=Lato:400,700';
+
+body {
+  color: #484848;
+  font-family: 'Lato', sans-serif;
+  padding: .45em .65em 1em;
+  line-height: 1.5;
+  background: lightblue;
+  border: 1px dotted #637a91;
+}
+
+
+p#ingredientSearchResult {
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+
+ul {
+  padding-left: 0;
+  list-style: circle;
+
+}
+
+ol {
+  list-style: decimal;
+
+}
+
+li {
+
+}
+
+}
+input#searchInput {
+
+
+}
+
+input#amount {
+
+
+}
+
+div {
+
+  padding: .2em .2em;
+  border-top: 1px dotted #637a91;
+  height: 320px;
+  background-color: black;
+}
+
+
+div#output {
+
+background-color: white;
+padding: 20px;
+
+}
+
+div#stateHTML {
+  background-color: white;
+}
+
+div#stagingArea {
+
+background-color: lime;
+
+}
+
+
+div#add {
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+/* Buttons */
+button {
+  color: white;
+  background: #508abc;
+  border: solid 1px;
+  border-color: rgba(0, 0, 0, .1);
+  border-radius: 15%;
+  cursor: pointer;
+  padding: 5px;
+  margin-top: 15px;
+}
