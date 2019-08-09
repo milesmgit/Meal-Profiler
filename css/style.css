@@ -42,7 +42,7 @@ input#amount {
 
 }
 
-div {
+div#header {
 
   padding: .2em .2em;
   border-top: 1px dotted #637a91;
@@ -69,7 +69,7 @@ background-color: lime;
 }
 
 
-div#add {
+div#calculate {
   background-color: white;
   margin: 0;
   padding: 0;

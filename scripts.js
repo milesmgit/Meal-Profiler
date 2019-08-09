@@ -31,8 +31,17 @@ populateIngredientArray = (ingredientObject, checkboxId, ingredientSearchResult,
   const amountTextInput = document.getElementById('amountTextInput');
 
 
+
   // If the checkbox is checked, display the output text
   if (checkBox.checked === true){
+
+    if (isNaN(parseFloat(amountInput.value))){
+      ingredientSearchResult.innerHTML ="That is not a number.  Enter a number and check the checkbox.";
+    }
+    else {
+      ingredientSearchResult.innerHTML ="Ingredient : " + ingredientObject.ingredient;
+    }
+
 
     // put the value of the parsedFloat textbox into the object key <amount>
     ingredientObject.amount = parseFloat(amountInput.value);
@@ -48,7 +57,7 @@ populateIngredientArray = (ingredientObject, checkboxId, ingredientSearchResult,
       for(let i = 0; i < liquidRadioGroup.length; i++){
         if (liquidRadioGroup[i].checked){
           ingredientObject.unit = liquidRadioGroup[i].value;
-          alert(ingredientObject.unit);
+
         }
       }
     } else {
@@ -56,7 +65,7 @@ populateIngredientArray = (ingredientObject, checkboxId, ingredientSearchResult,
         for(let i = 0; i < solidRadioGroup.length; i++){
           if (solidRadioGroup[i].checked){
             ingredientObject.unit = solidRadioGroup[i].value;
-            alert(ingredientObject.unit);
+
           }
         }
      }
@@ -68,6 +77,9 @@ populateIngredientArray = (ingredientObject, checkboxId, ingredientSearchResult,
     ingredientSearchResult.style.color = 'blue';
 
   } else {
+
+
+
     // returns the index [i] of the <tomatoIngredient> in the <ingredientArray>
     let removeIngredient = ingredientArray.indexOf(ingredientObject);
     // removes the <tomatoIngredient>  found at its index from the <ingredientArray> and stores the value in the variable <removed>
@@ -76,7 +88,7 @@ populateIngredientArray = (ingredientObject, checkboxId, ingredientSearchResult,
   }
 
 
-alert(ingredientArray[0].ingredient);
+
 
 }
 
@@ -132,7 +144,7 @@ console.log(resultIndex);
 if(result === undefined){
   ingredientSearchResult.innerHTML = searchInput.value + " is not in our database at this time.  Please search again.";
 } else {   // preface inquiries with result to get the returned search item: example.  result.ingredient or result.unit
-  ingredientSearchResult.innerHTML = "Ingredient: " + result.ingredient;
+  ingredientSearchResult.innerHTML = "Ingredient : " + result.ingredient;
 }
 
 // test for <state> and build out an html element list
@@ -150,10 +162,10 @@ if(result.state === 'Liquid'){
       <input type="radio"  name="liquidRadio" value="Teaspoons"> Teaspoons<br>
       <input type="radio"  name="liquidRadio" value="Tablespoons"> Tablespoons<br>
 
-      <input type='text' id='amountTextInput'>
+      <input type='text' id='amountTextInput' placeholder="Numerical value [ENTER]">
       <input type="checkbox" id="checkbox" onclick="populateIngredientArray(ingredientData[${resultIndex}], 'checkbox', ingredientSearchResult, amountTextInput)">
-      <div id='add'>
-            <button id='addButton'>Add to Meal</button>
+      <div id='calculate'>
+            <button id='calculateButton'>Calculate Meal</button>
       </div>
   `;
 
@@ -166,8 +178,8 @@ if(result.state === 'Liquid'){
 
       <input type='text' id='amountTextInput'>
       <input type="checkbox" id="checkbox" onclick="populateIngredientArray(ingredientData[${resultIndex}], 'checkbox', ingredientSearchResult, amountTextInput)">
-      <div id='add'>
-            <button id='addButton'>Add to Meal</button>
+      <div id='calculate'>
+            <button id='calculateButton'>Calculate Meal</button>
       </div>
   `;
 
