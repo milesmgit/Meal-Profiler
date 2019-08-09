@@ -2,35 +2,19 @@
 //  create a print function to write to the DOM using getElementByID
 const print1 = message => document.getElementById('output').innerHTML = message;
 
-
-
-
-
 // will be using checkboxes for pushing selected ingredients to this array of ingredientObjects for calculations.
+
 
 const ingredientArray = [];
 
-
-
-
-
-
-
-
-
-
-
 // get the ingredientSearchResult paragraph
 const ingredientSearchResult = document.getElementById('ingredientSearchResult');
-
 
 populateIngredientArray = (ingredientObject, checkboxId, ingredientSearchResult, amountInput) => {
   // Get the checkbox
   const checkBox = document.getElementById(checkboxId);
   //  [this group selects the text input elements that will be used to input ingredient amounts]
   const amountTextInput = document.getElementById('amountTextInput');
-
-
 
   // If the checkbox is checked, display the output text
   if (checkBox.checked === true){
@@ -42,11 +26,8 @@ populateIngredientArray = (ingredientObject, checkboxId, ingredientSearchResult,
       ingredientSearchResult.innerHTML ="Ingredient : " + ingredientObject.ingredient;
     }
 
-
     // put the value of the parsedFloat textbox into the object key <amount>
     ingredientObject.amount = parseFloat(amountInput.value);
-
-
 
     const liquidRadioGroup = document.querySelectorAll('[name=liquidRadio]');
     const solidRadioGroup = document.querySelectorAll('[name=solidRadio]');
@@ -70,15 +51,11 @@ populateIngredientArray = (ingredientObject, checkboxId, ingredientSearchResult,
         }
      }
 
-
-
     // push the object onto an array so that the Calculate2 function can process the array.
     ingredientArray.push(ingredientObject);
     ingredientSearchResult.style.color = 'blue';
 
   } else {
-
-
 
     // returns the index [i] of the <tomatoIngredient> in the <ingredientArray>
     let removeIngredient = ingredientArray.indexOf(ingredientObject);
@@ -87,10 +64,10 @@ populateIngredientArray = (ingredientObject, checkboxId, ingredientSearchResult,
     ingredientSearchResult.style.color = 'black';
   }
 
-
-
-
 }
+
+
+
 
 
 
@@ -164,8 +141,11 @@ if(result.state === 'Liquid'){
 
       <input type='text' id='amountTextInput' placeholder="Numerical value [ENTER]">
       <input type="checkbox" id="checkbox" onclick="populateIngredientArray(ingredientData[${resultIndex}], 'checkbox', ingredientSearchResult, amountTextInput)">
+      <div id='add'>
+            <button id='addButton' onclick="addItem(ingredientData[${resultIndex}])">Add this item</button>
+      </div>
       <div id='calculate'>
-            <button id='calculateButton' onclick="calculateNutrient2(ingredientArray)">Calculate Meal</button>
+            <button id='calculateButton' onclick="calculateNutrient2(stagingIngredientArray)">Calculate Meal</button>
       </div>
   `;
 
@@ -178,8 +158,11 @@ if(result.state === 'Liquid'){
 
       <input type='text' id='amountTextInput'>
       <input type="checkbox" id="checkbox" onclick="populateIngredientArray(ingredientData[${resultIndex}], 'checkbox', ingredientSearchResult, amountTextInput)">
+      <div id='add'>
+            <button id='addButton' onclick="addItem(ingredientData[${resultIndex}])">Add this item</button>
+      </div>
       <div id='calculateDiv'>
-            <button id='calculateButton' onclick="calculateNutrient2(ingredientArray)">Calculate Meal</button>
+            <button id='calculateButton' onclick="calculateNutrient2(stagingIngredientArray)">Calculate Meal</button>
       </div>
   `;
 
@@ -204,6 +187,29 @@ searchInput.addEventListener("keyup", function(event) {
 });
 
 
+
+const stagingIngredientArray = [];
+
+
+const addItem = (ingredientArray) => {
+
+  checkBox = document.getElementById('checkbox');
+
+  if (checkBox.checked === true){
+
+    // arrow function ES2015 for a search result: i am comparing the result of the current ingredientArray name against
+    // arrayNames currently pushed to the stagedIngredientArray.  If the result is undefined, I know I don't have any
+    // duplicates so I can push the value onto the stagedIngredientArray.  if it is not undefined, the index of the object pushed
+    //  will be the same, but the particular values will be overwritten. In this way, I won't have duplicates of the same item.
+    // i kinda lucked into this but I'm happy to have done so. :)
+    const result1 = stagingIngredientArray.find( ingredient => ingredient.name === ingredientArray.name.toLowerCase());
+    console.log(result1);
+    let resultIndex = ingredientData.indexOf(result1);
+    if(result1 === undefined){
+      stagingIngredientArray.push(ingredientArray);
+    }
+  }
+}
 
 
 
