@@ -165,7 +165,7 @@ if(result.state === 'Liquid'){
       <input type='text' id='amountTextInput' placeholder="Numerical value [ENTER]">
       <input type="checkbox" id="checkbox" onclick="populateIngredientArray(ingredientData[${resultIndex}], 'checkbox', ingredientSearchResult, amountTextInput)">
       <div id='calculate'>
-            <button id='calculateButton'>Calculate Meal</button>
+            <button id='calculateButton' onclick="calculateNutrient2(ingredientArray)">Calculate Meal</button>
       </div>
   `;
 
@@ -178,8 +178,8 @@ if(result.state === 'Liquid'){
 
       <input type='text' id='amountTextInput'>
       <input type="checkbox" id="checkbox" onclick="populateIngredientArray(ingredientData[${resultIndex}], 'checkbox', ingredientSearchResult, amountTextInput)">
-      <div id='calculate'>
-            <button id='calculateButton'>Calculate Meal</button>
+      <div id='calculateDiv'>
+            <button id='calculateButton' onclick="calculateNutrient2(ingredientArray)">Calculate Meal</button>
       </div>
   `;
 
@@ -202,3 +202,142 @@ searchInput.addEventListener("keyup", function(event) {
     document.getElementById("searchButton").click();
   }
 });
+
+
+
+
+
+
+// -------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+
+
+// current project:  create a meal profile calculator.
+
+
+
+// these are ingredientObjects
+// compute the value of the nutrient per ounce of ingredient and make allowances in the script for different unit measurements.
+// will use a form to add values to each object like so:    tomatoIngredient.Measurment_Unit = 'Ounces';   and tomatoIngredient.Amount = 2;
+// TODO:  add checks to ensure that numbers were entered into the appropriate form boxes.
+
+
+
+
+
+// function for calculating the modified value of a nutrient and formatting to 2 decimal places:
+// uses parseFloat to take input from form from string to float for math processing, then back to string upon formatting 2 decimal places with .toFixed(2)
+const modifiedNutrient = (nutrient, amount) => parseFloat(nutrient * amount).toFixed(2);
+
+
+// function for calculating the modified value of a nutrient and formatting to 2 decimal places:
+// uses parseFloat to take input from form from string to float for math processing, then back to string upon formatting 2 decimal places with .toFixed(2)
+const modifiedNutrientTotal =  amount => parseFloat(amount).toFixed(2);
+
+
+
+
+
+// create a function that
+//  1  loops through all of the items in the var ingredientArray array and computes the modified values of user input amounts and unit measurements,
+//  2  builds a string that can be printed to an html page dynamically
+//  3  prints to the page using the print(message) function
+
+const calculateNutrient2 = objectArray => {
+
+  // declare and initialize total nutrient variables: the point of these variables is to show total value of various nutrients so that the entire meal may be
+  // analyzed for total nutrients.
+
+  let total_Vitamin_A = 0;
+  let total_Potassium = 0;
+
+
+  // build the output data string:   later I can refactor the htmlData string using string interpolation like so:   htmlData += `<h1>Hello ${someVariableName} more words</h1>`;   those `` are backticks not single quotes.
+  let htmlData = '<h1>Meal Profile:</h1>';
+
+  // iterate through each array element, which is an object, and continue building the output string.
+  for ( let i = 0; i < objectArray.length; i++){
+
+    // assign  data access to abbreviated variable names to save typing later in the script.
+    const ingredientName = objectArray[i].ingredient;
+    let amount = objectArray[i].amount;
+    const measurementUnit = objectArray[i].unit;
+
+
+
+    htmlData += '<h2>Ingredient : ' + ingredientName + '</h2>';
+    htmlData += '<ul><li>Amount : ' + amount + ' ' + measurementUnit + '</li>';
+
+
+
+    //  add remaining nutrients as time allows
+    const vitamin_A = objectArray[i].vitamin_A;
+    const potassium = objectArray[i].potassium;
+
+    // next test for unitMeasurement and calculate accordingly.
+
+    if( measurementUnit === 'Grams' ){
+      // gram conversion: 1 gram = .035274 ounces.
+      amount *= 0.035274;
+
+    } else if (measurementUnit === 'Ounces'){
+      // the base ratio of nutrient values stored in the dry ingredient objects will be calculated assuming ounces
+      amount *= 1;
+      // the following 4 measurements (fluid ounces, milliliters, teaspoons, tablespoons) will only apply to volume measurements as they relate to fluid ounces.
+    } else if (measurementUnit === 'Fluid Ounces'){
+      amount *= 1;
+    } else if (measurementUnit === 'Milliliters'){
+      amount *= 0.033814;
+    } else if (measurementUnit === 'Teaspoons'){
+      amount *= 0.166667;
+    } else if (measurementUnit === 'Tablespoons'){
+      amount *= 0.5;
+    } else throw new Error("That measurement unit is not recognized.  The program is broken! :) ");
+
+
+
+    // perform the calculations using the modifiedNutrient function and store in the htmlData variable.
+    // this bit formats the amount * nutrient value to a string with 2 decimal places.
+    const modifiedVitaminA = modifiedNutrient(vitamin_A, amount);
+    const modifiedPotassium = modifiedNutrient(potassium, amount);
+
+    // print each single ingredient nutrient value to the page.
+    htmlData += '<li>Vitamin A : ' + modifiedVitaminA + ' % USRDA</li>';
+    htmlData += '<li>Potassium : ' + modifiedPotassium + ' % USRDA</li>';
+
+
+
+    // uses parseFloat() to store string as a float so that we can add multiple sources of each nutrient from each ingredient object pushed to the objectArray.
+    total_Vitamin_A += parseFloat(modifiedVitaminA);
+    total_Potassium += parseFloat(modifiedPotassium);
+
+
+
+    // complete the html with a closing </ul> tag.
+    htmlData += '</ul>';
+  }
+
+
+
+    // create an html string for total nutrients and place here outside the for loop.
+
+    htmlData += '<h3>Total Vitamin A for this meal satisfies ' + modifiedNutrientTotal(total_Vitamin_A) + ' % USRDA.</h3>';
+    htmlData += '<h3>Total Potassium for this meal satisfies ' + modifiedNutrientTotal(total_Potassium) + ' % USRDA.</h3>';
+
+
+
+    // this function prints to the outputDiv div on the html page.
+    print1(htmlData);
+}
+
+
+// TODO:  add form that will supply user input to for array and functions, and call and execute the calculateNutrient2 function.
+// call the function and pass as an argument the array of objects that were pushed by the user using the form
+
+
+
+
+
+const calculate = document.getElementById('calculateButton');
